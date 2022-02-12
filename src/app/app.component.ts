@@ -1,30 +1,17 @@
 import { Component } from '@angular/core';
-import { APIService }  from './api.service'
+import { Amplify } from 'aws-amplify';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.sass']
+  styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {  
-  voices = ["Karl","Dora"];
-  selectedVoice = "Karl";
-   
-  constructor(private api: APIService){}
-  playAudio(url:any){
-    let audio = new Audio();
-    audio.src = url;
-    audio.load();
-    audio.play();
-  }
-  speakNow(input:string){
-    let data = {
-      text: input,
-      voice: this.selectedVoice,
-      typeofgame: "sentences",
-      typeofdifficulty: "hard"
+export class AppComponent {
+  title = 'angular';
+
+  constructor() {
+    if (typeof window !== 'undefined') {
+      (window as any)['Amplify'] = Amplify;
     }
-    this.api.speak(data).subscribe((result:any) => {
-      this.playAudio(result[0].url);
-    });
   }
 }

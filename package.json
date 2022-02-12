@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "pull": "amplify pull --appId dol0ql26879pu --envName staging"
   },
   "private": true,
   "dependencies": {
