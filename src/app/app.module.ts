@@ -9,6 +9,10 @@ import { RoutingModule  } from 'angular-routing';
 import { AmplifyAuthenticatorModule } from '@aws-amplify/ui-angular';
 import {NewVoiceComponent} from 'src/pages/newVoice/new-voice.component'
 import {SignUpComponent} from 'src/pages/sign-up-with-email/sign-up.component'
+import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
+import {AuthGuard} from './auth.guard';
+import {AuthService} from './auth.service';
+
 
 
 @NgModule({
@@ -24,7 +28,10 @@ import {SignUpComponent} from 'src/pages/sign-up-with-email/sign-up.component'
     RoutingModule,
     AmplifyAuthenticatorModule,
     HttpClientModule,
-    LegacyAmplifyUiModule
+    LegacyAmplifyUiModule,
+    MdbRippleModule,
+    AuthGuard,
+    AuthService
   ],
   providers: [],
   bootstrap: [AppComponent]
