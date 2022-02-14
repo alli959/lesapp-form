@@ -1,11 +1,9 @@
 import { Injectable, NgModule } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from "rxjs";
-import { BehaviorSubject } from 'rxjs';
-import { from } from 'rxjs';
+import { Observable, BehaviorSubject, from, of } from 'rxjs';
 
-import { map, tap, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+
 import Amplify, { Auth } from 'aws-amplify';
 import awsExports from '../aws-exports';
 

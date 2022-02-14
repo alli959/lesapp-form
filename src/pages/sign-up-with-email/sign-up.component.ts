@@ -9,11 +9,8 @@ import { AuthenticatorService } from '@aws-amplify/ui-angular';
   templateUrl: 'sign-up.component.html',
 })
 export class SignUpComponent {
-  constructor(public authenticator: AuthenticatorService) {
-    Amplify.configure(awsExports);
-  }
 
-  
+
   services = {
     async handleSignUp(formData: Record<string, any>) {
       let { username, password, attributes } = formData;

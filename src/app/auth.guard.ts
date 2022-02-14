@@ -1,9 +1,7 @@
 import { Injectable, NgModule } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from "@angular/router";
-import { Auth } from "aws-amplify";
 import { Observable, tap } from "rxjs";
-import { AuthService } from './auth.service'
-import {RouterModule} from '@angular/router';
+import { AuthService } from './auth.service';
 
 @Injectable()
 @NgModule()
@@ -16,6 +14,7 @@ export class AuthGuard implements CanActivate {
         .pipe(
           tap(loggedIn => {
             if(!loggedIn) {
+              
               this.router.navigate(['/admin'])
             }
           })
