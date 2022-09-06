@@ -1,0 +1,33 @@
+.typeofgame-radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+    align-items: flex-start;
+  }
+  
+  .radio-button {
+    margin: 5px;
+  }
+
+.main-content{
+  display: flex;
+  justify-content: center;
+}
+.main-content-rows{
+  display: block;
+  width: 60%;
+  margin: auto;
+}
+
+.main-content-rows-content {
+  display: grid;
+  grid-template-columns: repeat(3, 30% [col-start]);
+  grid-column-gap: 1.5%;
+  column-gap: 1.5%;
+  grid-row-gap: 1.5%;
+  row-gap: 1.5%;
+  /* margin: auto;
+  max-width: 52%;
+  justify-content: space-between;
+  flex-wrap: wrap; */
+}

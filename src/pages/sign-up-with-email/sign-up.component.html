@@ -4,7 +4,7 @@
     let-user="user"
     let-signOut="signOut"
   >
-    <button type="button" class="btn btn-primary">Skoða</button>
+    <button type="button" [routerLink]="'get'" class="btn btn-primary">Skoða</button>
     <button type="button" [routerLink]="'add'" class="btn btn-success">Setja Inn</button>
     <h2>Welcome, {{ user.email }}</h2>
     <button (click)="signOut()">Sign Out</button>

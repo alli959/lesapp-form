@@ -8,10 +8,16 @@ import { FormsModule } from '@angular/forms';
 import { RoutingModule  } from 'angular-routing';
 import { AmplifyAuthenticatorModule } from '@aws-amplify/ui-angular';
 import {NewVoiceComponent} from 'src/pages/newVoice/new-voice.component'
+import {GetVoiceComponent} from 'src/pages/getVoice/get-voice.component'
 import {SignUpComponent} from 'src/pages/sign-up-with-email/sign-up.component'
 import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
 import {AuthGuard} from './auth.guard';
 import {AuthService} from './auth.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatCardModule} from '@angular/material/card';
+
+
 
 
 
@@ -19,7 +25,8 @@ import {AuthService} from './auth.service';
   declarations: [
     AppComponent,
     NewVoiceComponent,
-    SignUpComponent
+    SignUpComponent,
+    GetVoiceComponent
   ],
   imports: [
     FormsModule,
@@ -31,7 +38,10 @@ import {AuthService} from './auth.service';
     LegacyAmplifyUiModule,
     MdbRippleModule,
     AuthGuard,
-    AuthService
+    AuthService,
+    BrowserAnimationsModule,
+    MatRadioModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
