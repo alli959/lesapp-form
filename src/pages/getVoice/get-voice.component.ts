@@ -2,9 +2,6 @@ import {
   Component
 } from '@angular/core';
 import {
-  Object
-} from 'aws-sdk/clients/panorama';
-import {
   APIService
 } from '../../app/api.service'
 
