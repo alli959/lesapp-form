@@ -3,6 +3,9 @@
     <div>
       <textarea #userInput style="font-size: 15px; padding: 10px;" cols="60" rows="10"></textarea>
     </div>
+    <div style="margin-top: 10px">
+      <button style="font-size: 15px;" (click)="listenNow(userInput.value)">Hlusta</button>
+    </div>
     <div>
       <select [(ngModel)]="selectedGame">
         <option *ngFor="let game of typeOfGame" [ngValue]="game">{{game}}</option>
@@ -12,6 +15,6 @@
       </select>
     </div>
     <div style="margin-top: 10px">
-      <button style="font-size: 15px;" (click)="speakNow(userInput.value)">Speak Now</button>
+      <button style="font-size: 15px;" (click)="speakNow(userInput.value)">Vista</button>
     </div>
 </div>

@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 export class APIService {
   ENDPOINT = 'https://8iu5izdtgc.execute-api.eu-west-1.amazonaws.com/dev/speak';
   GETENDPOINT = 'https://8iu5izdtgc.execute-api.eu-west-1.amazonaws.com/dev/get';
+  LISTENENDPOINT = 'https://8iu5izdtgc.execute-api.eu-west-1.amazonaws.com/dev/listen';
   constructor(private http:HttpClient) {}
   speak(data:any) {
     console.log("data =", data);
@@ -17,6 +18,9 @@ export class APIService {
         ...params
       }
     });
+  }
+  listen(data:any) {
+    return this.http.post(this.LISTENENDPOINT, data);
   }
 
   getText(url:any) {

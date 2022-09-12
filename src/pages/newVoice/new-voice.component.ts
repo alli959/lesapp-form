@@ -29,6 +29,15 @@ export class NewVoiceComponent {
     audio.load();
     audio.play();
   }
+  listenNow(input:string) {
+    let data = {
+      textkey: input,
+      voiceid: this.selectedVoice,
+    }
+    this.api.listen(data).subscribe((result:any) => {
+      this.playAudio(result[0]);
+    });
+  }
   speakNow(input:string){
     let data = {
       text: input,
