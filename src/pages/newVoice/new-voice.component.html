@@ -1,7 +1,11 @@
+<application-nav-bar></application-nav-bar>
 <div style="margin: auto; padding: 10px; text-align: center;">
     <h2>My Talking App</h2>
     <div>
       <textarea #userInput style="font-size: 15px; padding: 10px;" cols="60" rows="10"></textarea>
+    </div>
+    <div style="margin-top: 10px">
+      <button style="font-size: 15px;" (click)="buildVoice(userInput.value)">Byggja</button>
     </div>
     <div style="margin-top: 10px">
       <button style="font-size: 15px;" (click)="listenNow(userInput.value)">Hlusta</button>
@@ -16,5 +20,20 @@
     </div>
     <div style="margin-top: 10px">
       <button style="font-size: 15px;" (click)="speakNow(userInput.value)">Vista</button>
+    </div>
+    <div class="main-content" [ngStyle]="{'display': shouldDisplayGeneratedText()}">
+      <div class="main-content-rows" style="display:block">
+        <div class="main-content-rows-content">
+          <mat-card class="example-card" *ngFor="let value of wordsplit">
+            <mat-card-content>
+              <p>{{value}}</p>
+            </mat-card-content>
+            <!-- <mat-card-actions>
+              <button (click)="playAudio(value.Karl)" mat-button>Karl</button>
+              <button (click)="playAudio(value.Dora)" mat-button>Dora</button>
+            </mat-card-actions> -->
+          </mat-card>
+        </div>
+      </div>
     </div>
 </div>

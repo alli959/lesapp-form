@@ -4,10 +4,13 @@
     let-user="user"
     let-signOut="signOut"
   >
+  <!-- Below I will import the nav-bar.component and use it -->
+  <application-nav-bar></application-nav-bar>
+  <router-outlet></router-outlet>
+  <div class = "buttongroup">
     <button type="button" [routerLink]="'get'" class="btn btn-primary">Skoða</button>
     <button type="button" [routerLink]="'add'" class="btn btn-success">Setja Inn</button>
-    <h2>Welcome, {{ user.email }}</h2>
-    <button (click)="signOut()">Sign Out</button>
-    
+  </div>
+  <h2>Welcome, {{ user.email }}</h2>
   </ng-template>
 </amplify-authenticator>

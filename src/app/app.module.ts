@@ -16,6 +16,7 @@ import {AuthService} from './auth.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatCardModule} from '@angular/material/card';
+import {NavBarComponent} from '../components/nav-bar.component';
 
 
 
@@ -26,7 +27,8 @@ import {MatCardModule} from '@angular/material/card';
     AppComponent,
     NewVoiceComponent,
     SignUpComponent,
-    GetVoiceComponent
+    GetVoiceComponent,
+    NavBarComponent
   ],
   imports: [
     FormsModule,

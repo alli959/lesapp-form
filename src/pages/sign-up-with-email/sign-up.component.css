@@ -1,0 +1,18 @@
+.buttongroup{
+    padding-top: 20px;
+    display:flex;
+    margin: auto;
+    padding: 10px;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 40%;
+    background-color: cornsilk;
+}
+
+.buttongroup button {
+    margin: 10px;
+    width: 100%;
+    height: 20%;
+    font-size: 1.5em;
+}
