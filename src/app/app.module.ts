@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { RoutingModule  } from 'angular-routing';
 import { AmplifyAuthenticatorModule } from '@aws-amplify/ui-angular';
 import {NewVoiceComponent} from 'src/pages/newVoice/new-voice.component'
+import {NewVoiceModal} from 'src/pages/newVoice/new-voice.component'
 import {GetVoiceComponent} from 'src/pages/getVoice/get-voice.component'
 import {SignUpComponent} from 'src/pages/sign-up-with-email/sign-up.component'
 import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
@@ -17,6 +18,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatCardModule} from '@angular/material/card';
 import {NavBarComponent} from '../components/nav-bar.component';
+
+import {MaterialExampleModule} from '../material.module';
+import { SvgIconComponent } from 'src/components/svg-icon.component';
+
 
 
 
@@ -28,7 +33,9 @@ import {NavBarComponent} from '../components/nav-bar.component';
     NewVoiceComponent,
     SignUpComponent,
     GetVoiceComponent,
-    NavBarComponent
+    NavBarComponent,
+    NewVoiceModal,
+    SvgIconComponent
   ],
   imports: [
     FormsModule,
@@ -43,7 +50,8 @@ import {NavBarComponent} from '../components/nav-bar.component';
     AuthService,
     BrowserAnimationsModule,
     MatRadioModule,
-    MatCardModule
+    MatCardModule,
+    MaterialExampleModule
   ],
   providers: [],
   bootstrap: [AppComponent]

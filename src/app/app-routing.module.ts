@@ -7,6 +7,7 @@ import { AuthenticatorService } from '@aws-amplify/ui-angular';
 import { Observable } from 'rxjs';
 import { Amplify, Auth } from 'aws-amplify';
 import { AuthGuard } from './auth.guard';
+import { SvgIconComponent } from 'src/components/svg-icon.component';
 
 
 
@@ -32,7 +33,12 @@ const routes: Routes = [
     component: GetVoiceComponent,
     data: {requiresLogin: true},
     canActivate: [ AuthGuard ]
+  },
+  {
+    path: 'assets/svg/:name',
+    component: SvgIconComponent,
   }
+  
 
 ];
 

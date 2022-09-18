@@ -1,0 +1,42 @@
+<div class="listenbuildmodal">
+
+  <h2 mat-dialog-title>Vista hljóð og texta</h2>
+  <mat-dialog-content class="mat-typography">
+    <div class="main-content" style="display: block;">
+      <div class="main-content-rows" style="display:flex;">
+        <div class="main-content-rows-content">
+          <mat-card class="example-card" *ngFor="let value of typesArr; let i = index" [attr.data-index]="i">
+            <mat-card-content>
+              <mat-card-actions class = "example-card-action">
+                <button style = "transform: scaleX(-1); width: 30%;" mat-button (click)="listenKarl(value,i)">
+                  <app-svg-icon style="width: 20px;" name="ear"></app-svg-icon>
+                </button>
+                <div class = "cardword"><p>{{wordsplit[i]}}</p></div>
+                <button mat-button style = "width: 30%;" (click)="listenDora(value,i)">
+                  <app-svg-icon style="width: 20px;" name="ear"></app-svg-icon>
+                </button>
+              </mat-card-actions>
+              <mat-card-actions class = "change-word-action">
+                <mat-radio-group class = "change-word-radio"
+                [(ngModel)]="typeindex[i]"
+                >
+                  <mat-radio-button class = "change-word-radio-button" *ngFor="let toggle of typesArr[i]; let j = index" [attr.data-index]="i" [value]="j" [checked]="isToggle(i,j)" (change) = "changeToggle(i,j)"></mat-radio-button>
+                </mat-radio-group>
+                </mat-card-actions>
+            </mat-card-content>
+            <!-- <mat-card-actions>
+            <button (click)="playAudio(value.Karl)" mat-button>Karl</button>
+            <button (click)="playAudio(value.Dora)" mat-button>Dora</button>
+          </mat-card-actions> -->
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="listenToSentenceDoraAfterBuild()" style="color: blue;">Hlusta á Dóru</button>
+    <button mat-button (click)="listenToSentenceKarlAfterBuild()"style="color: red;">Hlusta á Karl</button>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>
+  </mat-dialog-actions>
+</div>

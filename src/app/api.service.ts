@@ -27,4 +27,6 @@ export class APIService {
     
     return this.http.get(url, { responseType: 'text' as 'text'});
   }
+
+  
 }
