@@ -4,6 +4,10 @@ import {
 import {
   APIService
 } from '../../app/api.service'
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import { DialogComponent } from 'src/components/dialog.component';
+import {SnackBarComponent} from 'src/components/snackbar.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 // import {MatRadioModule} from '@angular/material/radio';
 
@@ -16,8 +20,15 @@ import {
 export class GetVoiceComponent {
 
 
-  constructor(private api: APIService) {}
+  constructor(private api: APIService, public dialog: MatDialog, private _snackBar: MatSnackBar) {}
 
+
+  openSnackBar(message: string) {
+    
+    this._snackBar.open(message,undefined,{
+      duration: 3000,
+    });
+  }
   shouldDisplayDifficulty() {
     if (!this.chosentypeofgame || this.chosentypeofgame === 'letters') {
       return 'none';
@@ -70,5 +81,35 @@ export class GetVoiceComponent {
       }
     })
   }
+
+  deleteData(id: any,index: any) {
+    let dialog = this.dialog.open(DialogComponent, {
+      width: '250px'
+    });
+      dialog.afterClosed().subscribe(result => {
+        if(result === "yes") {          
+          console.log("id is =>", id);
+          this.api.delete({
+            id: id,
+            typeofgame: this.chosentypeofgame,
+            typeofdifficulty: this.chosendifficulty
+      
+          }).subscribe((result: any) => {
+            this.openSnackBar("Tókst að eyða");
+            this.cardvalues.splice(index,1);
+          });
+    }
+      }
+    );
+    
+
+
+}
+
+  updateData(id: any) {
+    console.log("id is =>", id);
+    console.log("hello world from update");
+  }
+  
 
 }

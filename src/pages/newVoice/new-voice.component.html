@@ -10,14 +10,6 @@
     <div style="margin-top: 10px">
       <button style="font-size: 15px;" (click)="listenNow(userInput.value)">Hlusta</button>
     </div>
-    <div>
-      <select [(ngModel)]="selectedGame">
-        <option *ngFor="let game of typeOfGame" [ngValue]="game">{{game}}</option>
-      </select>
-      <select [(ngModel)]="selectedDifficulty">
-        <option *ngFor="let difficulty of typeOfDifficulty" [ngValue]="difficulty">{{difficulty}}</option>
-      </select>
-    </div>
     <div style="margin-top: 10px">
       <button style="font-size: 15px;" (click)="speakNow(userInput.value)">Vista</button>
     </div>

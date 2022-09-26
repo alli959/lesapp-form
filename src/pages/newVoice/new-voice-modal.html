@@ -36,7 +36,7 @@
   <mat-dialog-actions align="end">
     <button mat-button (click)="listenToSentenceDoraAfterBuild()" style="color: blue;">Hlusta á Dóru</button>
     <button mat-button (click)="listenToSentenceKarlAfterBuild()"style="color: red;">Hlusta á Karl</button>
-    <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>
+    <button mat-button mat-dialog-close>Hætta</button>
+    <button mat-button (click)="saveString()"cdkFocusInitial>Vista</button>
   </mat-dialog-actions>
 </div>

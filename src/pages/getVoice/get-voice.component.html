@@ -20,7 +20,11 @@
     <div class="main-content" [ngStyle]="{'display': shouldDisplayMainContent()}">
       <div class="main-content-rows" style="display:block">
         <div class="main-content-rows-content">
-          <mat-card class="example-card" *ngFor="let value of cardvalues">
+          <mat-card class="example-card" *ngFor="let value of cardvalues; let i = index" [attr.data-index]="i">
+            <mat-card-actions>
+              <button (click)="deleteData(value.Dora.split('/')[value.Dora.split('/').length-1].split('_')[0],i)" mat-button>Eyða</button>
+              <button (click)="updateData(value.Dora.split('/')[value.Dora.split('/').length-1].split('_')[0])" mat-button>Uppfæra</button>
+            </mat-card-actions>
             <mat-card-content>
               <p>{{value.Text}}</p>
             </mat-card-content>
