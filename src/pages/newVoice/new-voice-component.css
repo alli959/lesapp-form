@@ -1,3 +1,25 @@
+mat-card-content .mat-card-content-data {
+    display: grid;
+    grid-template-columns: 6fr 4fr;
+    height: 100%;
+}
+
+.example-card-left {
+    width: 60%;
+    border-right: black;
+    border-radius: 2px;
+}
+.example-card-right {
+    width: 40%;
+}
+
+.addSilentOrSound {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
 .listenbuildmodal{
     position: relative;
     /* min-width: 80%; */
@@ -5,17 +27,14 @@
 
 .example-card {
     display: flex;
+    margin: auto;
 }
 
 
 .example-card-action{
-    /* display: flex;
-    align-items: baseline;
-    flex-wrap: wrap;
-    justify-content: start; */
     display: grid;
     grid-template-columns: 2fr 1fr 2fr;
-    /* margin: auto; */
+    justify-items: center;
 }
 
 
@@ -23,34 +42,47 @@
     flex: 0 0 15%;
 } */
 
-::ng-deep #cdk-overlay-0 {
+::ng-deep .cdk-overlay-pane {
     /* width: 80%; */
     min-width: 80vw !important;
     max-width: 100vw !important;
 }
 .main-content-rows-content {
     display: grid;
-    grid-template-columns: 3fr 3fr 3fr;
-    width: 80%;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+
+    width: 100%;
 }
 
 @media only screen and (max-width: 1067px) {
-    .main-content-rows-content {
+    /* .main-content-rows-content {
         display: grid;
         grid-template-columns: 4.5fr 4.5fr;
         width: 100%;
-    }
+    } */
 }
 @media only screen and (max-width: 745px) {
-    .main-content-rows-content {
+    /* .main-content-rows-content {
         display: grid;
         grid-template-columns: 9fr;
         width: 100%;
         margin: auto;
+    } */
+    /* mat-card-content .mat-card-content-data {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1.5fr 1fr;
+        width: 100%;
     }
+    .addSilentOrSound {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+    } */
 }
 .mat-card.mat-focus-indicator.example-card.ng-star-inserted {
-    background-color: orange;
+    background-color: #DBD552;
     margin: 10px;
 }
 
@@ -62,7 +94,7 @@
     font-variant-east-asian: normal;
     font-weight: 500;
     font-stretch: normal;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 24px;
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
@@ -82,7 +114,7 @@
     width: 100%;
 }
 .main-content-rows {
-    display: block;
+    display: block !important;
     width: 100%;
 }
 

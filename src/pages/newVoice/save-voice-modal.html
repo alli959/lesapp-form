@@ -1,5 +1,7 @@
 
-<div class="SaveVoiceModal">
+<div class="SaveVoiceModal" style="display:block">
+    <h1>Vista</h1>
+    <h2>Veldu leik og vinnustig</h2>
     <select [(ngModel)]="selectedGame">
       <option *ngFor="let game of typeOfGame" [ngValue]="game">{{game}}</option>
     </select>
@@ -7,6 +9,7 @@
       <option *ngFor="let difficulty of typeOfDifficulty" [ngValue]="difficulty">{{difficulty}}</option>
     </select>
     <div style="margin-top: 10px">
+        <button mat-button mat-dialog-close="no" style="font-size: 15px;">Til baka</button>
         <button mat-button mat-dialog-close="yes" style="font-size: 15px;" (click)="speakNow()">Vista</button>
     </div>
   </div>

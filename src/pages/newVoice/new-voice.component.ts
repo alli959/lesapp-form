@@ -115,7 +115,6 @@ export interface FinalDialogData {
 export class NewVoiceComponent {
 
   wordsplit: string[] = [];
-  isWordGenerated = false;
   voices = ["Karl", "Dora"];
   selectedVoice = "Karl";
   typeOfGame = ["sentences", "words", "letters"];
@@ -159,7 +158,6 @@ export class NewVoiceComponent {
 
   buildVoice(input: string) {
     this.wordsplit = input.split(" ");
-    this.isWordGenerated = true;
     let data = {
       textkey: input,
       voiceid: this.selectedVoice,
@@ -190,12 +188,7 @@ export class NewVoiceComponent {
     });
   }
 
-  shouldDisplayGeneratedText() {
-    if (this.isWordGenerated) {
-      return 'flex';
-    }
-    return 'none';
-  }
+
 
 }
 
@@ -225,31 +218,11 @@ export class NewVoiceModal {
     for (const element of this.wordsplit) {
 
       if (element.includes('ll')) {
-        // let beforeString = `${element.substring(0, element.indexOf('ll'))}`
-        // let lastBeforeString = `${element.substring(0, element.indexOf('ll')-1)}`
-        // let middleOne = '<phoneme alphabet="x-sampa" ph="l:">ll</phoneme>';
-        // let middleTwo = '<phoneme alphabet="x-sampa" ph="ll">ll</phoneme>';
-        // let middleThree = 't<phoneme alphabet="x-sampa" ph="l">ll</phoneme>';
-        // let middleFour = '<phoneme alphabet="x-sampa" ph="tl">ll</phoneme>';
-        // let middleFive = `<phoneme alphabet="x-sampa" ph="${element.substring(0,element.indexOf('ll')+2)}">ll</phoneme>`;
-        // let afterString = element.substring(element.indexOf('ll') + 2, element.length);
         let wordWithoutT = `${element.substring(0, element.indexOf('ll'))}ll${element.substring(element.indexOf('ll')+2, element.length)}`;
         let wordWithT = `${element.substring(0, element.indexOf('ll'))}tl${element.substring(element.indexOf('ll')+2, element.length)}`;
         console.log("wordwitht is => ", wordWithT);
         let newStringArr = [
           element,
-          // beforeString +
-          // middleOne +
-          // afterString,
-          // beforeString +
-          // middleTwo +
-          // afterString,
-          // beforeString +
-          // middleThree +
-          // afterString,
-          // beforeString +
-          // middleFour +
-          // afterString,
           sampa(wordWithT),
           sampa(wordWithoutT)
           
@@ -266,7 +239,31 @@ export class NewVoiceModal {
   }
 
 
+  addSound(index: number) {
+    let dialogRef = this.dialog.open(LetterSound);
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        let sampares = '<prosody rate="50%"><prosody volume="x-loud">' + sampa(result) + '</prosody></prosody>';
+        this.typesArr.splice(index+1, 0, [sampares]);
+        this.wordsplit.splice(index+1, 0, result);
+        this.selectedType.splice(index+1, 0, [true]);
+        this.typeindex.splice(index+1, 0, 0);
+      }
+    });
+  }
 
+  addSilent(index: number) {
+    let dialogRef = this.dialog.open(SilentSound);
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        let resText = `<break time="${result}s"/>`
+        this.typesArr.splice(index+1, 0, [resText]);
+        this.wordsplit.splice(index+1, 0, resText);
+        this.selectedType.splice(index+1, 0, [true]);
+        this.typeindex.splice(index+1, 0, 0);
+      }
+    });
+  }
 
   playAudioBuffer(buffer: any) {
     const context = new AudioContext();
@@ -318,7 +315,7 @@ export class NewVoiceModal {
   // listen to the sentence Karl after build
   listenToSentenceKarlAfterBuild() {
     let sentence = "";
-    for (let i = 0; i < this.wordsplit.length; i++) {
+    for (let i = 0; i < this.typesArr.length; i++) {
       sentence = sentence + this.typesArr[i][this.typeindex[i]] + " ";
     }
     let data = {
@@ -332,7 +329,7 @@ export class NewVoiceModal {
   // listen to the sentence Dora after build
   listenToSentenceDoraAfterBuild() {
     let sentence = "";
-    for (let i = 0; i < this.wordsplit.length; i++) {
+    for (let i = 0; i < this.typesArr.length; i++) {
       sentence = sentence + this.typesArr[i][this.typeindex[i]] + " ";
     }
     let data = {
@@ -351,6 +348,8 @@ export class NewVoiceModal {
     for (let i = 0; i < this.wordsplit.length; i++) {
       textkey = textkey + this.typesArr[i][this.typeindex[i]] + " ";
     }
+    console.log("textkey is",textkey);
+
     const dialogRef = this.dialog.open(SaveVoiceModal, {
       
       data: {
@@ -366,13 +365,31 @@ export class NewVoiceModal {
 
 }
 
+
+@Component({
+  selector: 'silentsound',
+  templateUrl: './silentsound.html',
+
+})
+export class SilentSound {
+  
+}
+@Component({
+  selector: 'lettersound',
+  templateUrl: './lettersound.html',
+
+})
+export class LetterSound {
+  
+}
 @Component({
   selector: 'save-voice-content',
   templateUrl: './save-voice-modal.html',
   styleUrls: ['./new-voice-component.css']
 
-
 })
+
+
 export class SaveVoiceModal {
 
   voices = ["Karl", "Dora"];
@@ -383,7 +400,7 @@ export class SaveVoiceModal {
   selectedDifficulty = "Auðvelt";
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: FinalDialogData, private api: APIService, private _snackBar: MatSnackBar, public dialog: MatDialog) {
-
+    
     
   }
 

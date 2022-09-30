@@ -7,8 +7,8 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { RoutingModule  } from 'angular-routing';
 import { AmplifyAuthenticatorModule } from '@aws-amplify/ui-angular';
-import {NewVoiceComponent, NewVoiceModal, SaveVoiceModal} from 'src/pages/newVoice/new-voice.component'
-import {GetVoiceComponent} from 'src/pages/getVoice/get-voice.component'
+import {NewVoiceComponent, NewVoiceModal, SaveVoiceModal, LetterSound, SilentSound} from 'src/pages/newVoice/new-voice.component'
+import {GetVoiceComponent, UpdateLetterSound, UpdateSaveVoiceModal, UpdateSilentSound, UpdateVoiceModal} from 'src/pages/getVoice/get-voice.component'
 import {SignUpComponent} from 'src/pages/sign-up-with-email/sign-up.component'
 import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
 import {AuthGuard} from './auth.guard';
@@ -40,7 +40,13 @@ import { SvgIconComponent } from 'src/components/svg-icon.component';
     SvgIconComponent,
     SaveVoiceModal,
     DialogComponent,
-    SnackBarComponent
+    SnackBarComponent,
+    LetterSound,
+    SilentSound,
+    UpdateVoiceModal,
+    UpdateLetterSound,
+    UpdateSaveVoiceModal,
+    UpdateSilentSound
   ],
   imports: [
     FormsModule,

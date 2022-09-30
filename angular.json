@@ -31,7 +31,10 @@
               "src/favicon.ico",
               "src/assets",
               "src/assets/svg/ear.svg",
-              "src/assets/svg/ear-flip.svg"
+              "src/assets/svg/ear-flip.svg",
+              "src/assets/svg/lettersound.svg",
+              "src/assets/svg/pause.svg",
+              "src/assets/svg/breakimg.svg"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
