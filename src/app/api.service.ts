@@ -27,16 +27,12 @@ export class APIService {
     let token =  (await Auth.currentSession()).getIdToken().getJwtToken();
     let headers = {
       'Content-Type': 'application/json',
-      'charset': 'utf-8',
-      'Access-Control-Allow-Origin': '*',
       'Authorization': `Bearer ${token}`
     }
     console.log("token is =>", token);
    
     
     return this.http.get(this.GETENDPOINT, {
-      headers: headers,
-      withCredentials: true,
       params: {
         ...params
       }
