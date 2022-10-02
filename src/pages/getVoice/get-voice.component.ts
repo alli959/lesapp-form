@@ -156,13 +156,13 @@ export class GetVoiceComponent {
 
 
 
-  getData() {
+  async getData() {
     this.cardvalues = [];
-    this.api.get({
+    (await this.api.get({
       typeofgame: this.chosentypeofgame,
       typeofdifficulty: this.chosendifficulty,
       istextkey: true
-    }).subscribe((result: any) => {
+    })).subscribe((result: any) => {
       for (let key = 0; key < result.length; key++) {
         console.log("result", result);
         let temp = result[key];
