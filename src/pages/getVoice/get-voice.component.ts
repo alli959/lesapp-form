@@ -134,9 +134,9 @@ export interface FinalDialogData {
 })
 export class GetVoiceComponent {
   currentWord: string = ''
-  chosentypeofgame: string = ''
+  chosentypeofgame: string = 'letters';
   typeofgame: string[] = ['letters', 'sentences', 'words'];
-  chosendifficulty: string = '';
+  chosendifficulty: string = 'easy';
   typeofdifficulty: string[] = ['easy', 'medium'];
   cardvalues: any[] = [];
 
@@ -434,7 +434,7 @@ export class UpdateVoiceModal {
     let dialogRef = this.dialog.open(UpdateSilentSound);
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        let resText = `<break time="${result}s"/>`
+        let resText = `<break time="${result}ms"/>`
         this.typesArr.splice(index + 1, 0, [resText]);
         this.wordsplit.splice(index + 1, 0, resText);
         this.selectedType.splice(index + 1, 0, [true]);
