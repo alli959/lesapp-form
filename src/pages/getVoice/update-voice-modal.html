@@ -10,13 +10,15 @@
               <div *ngIf="value[0][0] !== '<'" class="mat-card-content-data">
                 <div class="example-card-left">
                   <mat-card-actions class="example-card-action">
-                    <button mat-button matTooltip="Hlusta á framburð Karls á orði" style="transform: scaleX(-1); width: 30%;" (click)="listenKarl(value,i)">
+                    <button mat-button matTooltip="Hlusta á framburð Karls á orði"
+                      style="transform: scaleX(-1); width: 30%;" (click)="listenKarl(value,i)">
                       <app-svg-icon style="width: 20px;" name="ear"></app-svg-icon>
                     </button>
                     <div class="cardword">
                       <p>{{wordsplit[i]}}</p>
                     </div>
-                    <button mat-button matTooltip="Hlusta á framburð Dóru á orði" style="width: 30%;" (click)="listenDora(value,i)">
+                    <button mat-button matTooltip="Hlusta á framburð Dóru á orði" style="width: 30%;"
+                      (click)="listenDora(value,i)">
                       <app-svg-icon style="width: 20px;" name="ear"></app-svg-icon>
                     </button>
                   </mat-card-actions>
@@ -31,47 +33,69 @@
                 <div class="example-card-right">
 
                   <mat-card-actions style="height:100%;">
-                    <div class = "addSilentOrSound">
-                      <button (click)="addSound(i)" mat-button matTooltip="Bæta við hljóð stafa" style="width: 80%; height: 80%; align-self: center;">
+                    <div class="addSilentOrSound">
+                      <button (click)="addSound(i)" mat-button matTooltip="Bæta við hljóð stafa"
+                        style="width: 80%; height: 80%; align-self: center;">
                         <app-svg-icon style="width: 20px; height: 20px;" name="lettersound"></app-svg-icon>
                       </button>
-                      <button (click)="addSilent(i)" mat-button matTooltip="Bæta við þögn" style="width: 80%; height: 80%; align-self: flex-end;">
+                      <button (click)="addSilent(i)" mat-button matTooltip="Bæta við þögn"
+                        style="width: 80%; height: 80%; align-self: flex-end;">
                         <app-svg-icon style="width: 20px; height: 20px;" name="pause"></app-svg-icon>
                       </button>
                     </div>
                   </mat-card-actions>
                 </div>
               </div>
-              <div *ngIf="value[0][0] + value[0][1] == '<b'" style = "display: flex; margin: auto; inline-size: min-content; background: #DAD56E; padding: 10px;">
-                <app-svg-icon   class="mat-card-content-data"  name="breakimg"></app-svg-icon>
-                <div class = "addSilentOrSound">
-                  <button (click)="addSound(i)" mat-button matTooltip="Bæta við hljóð stafa" style="width: 80%; height: 80%; align-self: center;">
-                    <app-svg-icon style="width: 20px; height: 20px;" name="lettersound"></app-svg-icon>
-                  </button>
-                  <button (click)="addSilent(i)" mat-button matTooltip="Bæta við þögn" style="width: 80%; height: 80%; align-self: flex-start;">
-                    <app-svg-icon style="width: 20px; height: 20px;" name="pause"></app-svg-icon>
-                  </button>
+              <div *ngIf="value[0][0] + value[0][1] == '<b'"
+                style="display: block; margin: auto; inline-size: min-content; background: #DAD56E; padding: 10px;">
+                <button (click)="removeCard(i)" mat-button matTooltip="Fjarlægja orð"
+                  style="width: 80%; height: 80%; align-self: center;">
+                  Fjarlægja
+                </button>
+                <div style="display: flex; margin: auto; inline-size: min-content; background: #DAD56E; padding: 10px;">
+                  <app-svg-icon class="mat-card-content-data" name="breakimg"></app-svg-icon>
+                  <div class="addSilentOrSound">
+                    <button (click)="addSound(i)" mat-button matTooltip="Bæta við hljóð stafa"
+                      style="width: 80%; height: 80%; align-self: center;">
+                      <app-svg-icon style="width: 20px; height: 20px;" name="lettersound"></app-svg-icon>
+                    </button>
+                    <button (click)="addSilent(i)" mat-button matTooltip="Bæta við þögn"
+                      style="width: 80%; height: 80%; align-self: flex-start;">
+                      <app-svg-icon style="width: 20px; height: 20px;" name="pause"></app-svg-icon>
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div *ngIf="value[0][0] + value[0][1] + value[0][2] == '<pr'" style = "display: flex; margin: auto; inline-size: min-content; background: #CBC89A;">
-                <mat-card-actions class="example-card-action">
-                  <button style="transform: scaleX(-1); width: 30%;" mat-button matTooltip="Hlusta á framburð Karls á hljóðum stafa" (click)="listenKarl(value,i)">
-                    <app-svg-icon style="width: 20px;" name="ear"></app-svg-icon>
-                  </button>
-                  <div class="cardword">
-                    <p>{{wordsplit[i]}}</p>
+              <div *ngIf="value[0][0] + value[0][1] + value[0][2] == '<pr'"
+                style="display: block; margin: auto; inline-size: min-content; background: #CBC89A;">
+                <button (click)="removeCard(i)" mat-button matTooltip="Fjarlægja orð"
+                  style="width: 80%; height: 80%; align-self: center;">
+                  Fjarlægja
+                </button>
+                <div style="display: flex; margin: auto; inline-size: min-content; background: #DAD56E; padding: 10px;">
+                  <mat-card-actions class="example-card-action">
+                    <button style="transform: scaleX(-1); width: 30%;" mat-button
+                      matTooltip="Hlusta á framburð Karls á hljóðum stafa" (click)="listenKarl(value,i)">
+                      <app-svg-icon style="width: 20px;" name="ear"></app-svg-icon>
+                    </button>
+                    <div class="cardword">
+                      <p>Hljóð</p>
+                    </div>
+                    <button mat-button matTooltip="Hlusta á framburð Dóru á hljóðum stafa" style="width: 30%;"
+                      (click)="listenDora(value,i)">
+                      <app-svg-icon style="width: 20px;" name="ear"></app-svg-icon>
+                    </button>
+                  </mat-card-actions>
+                  <div class="addSilentOrSound">
+                    <button (click)="addSound(i)" mat-button matTooltip="Bæta við hljóð stafa"
+                      style="width: 80%; height: 80%; align-self: center;">
+                      <app-svg-icon style="width: 20px; height: 20px;" name="lettersound"></app-svg-icon>
+                    </button>
+                    <button (click)="addSilent(i)" mat-button matTooltip="Bæta við þögn"
+                      style="width: 80%; height: 80%; align-self: flex-start;">
+                      <app-svg-icon style="width: 20px; height: 20px;" name="pause"></app-svg-icon>
+                    </button>
                   </div>
-                  <button mat-button matTooltip="Hlusta á framburð Dóru á hljóðum stafa" style="width: 30%;" (click)="listenDora(value,i)">
-                    <app-svg-icon style="width: 20px;" name="ear"></app-svg-icon>
-                  </button>
-                </mat-card-actions>
-                <div class = "addSilentOrSound">
-                  <button (click)="addSound(i)" mat-button matTooltip="Bæta við hljóð stafa"  style="width: 80%; height: 80%; align-self: center;">
-                    <app-svg-icon style="width: 20px; height: 20px;" name="lettersound"></app-svg-icon>
-                  </button>
-                  <button (click)="addSilent(i)" mat-button matTooltip="Bæta við þögn" style="width: 80%; height: 80%; align-self: flex-start;">
-                    <app-svg-icon style="width: 20px; height: 20px;" name="pause"></app-svg-icon>
-                  </button>
                 </div>
               </div>
             </mat-card-content>

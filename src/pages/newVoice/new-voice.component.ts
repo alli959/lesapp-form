@@ -241,13 +241,24 @@ export class NewVoiceModal {
 
   addSound(index: number) {
     let dialogRef = this.dialog.open(LetterSound);
-    dialogRef.afterClosed().subscribe(result => {
-      if(result) {
-        let sampares = '<prosody rate="50%"><prosody volume="x-loud">' + sampa(result) + '</prosody></prosody>';
-        this.typesArr.splice(index+1, 0, [sampares]);
-        this.wordsplit.splice(index+1, 0, result);
-        this.selectedType.splice(index+1, 0, [true]);
-        this.typeindex.splice(index+1, 0, 0);
+    dialogRef.afterClosed().subscribe(result_type => {
+      if (result_type) {
+        let [result,type] = [result_type.split("_")[0],result_type.split("_")[1]];
+        if(type === "texti") {
+          let sampares = '<prosody volume="x-loud">' + result + '</prosody>';
+          this.typesArr.splice(index + 1, 0, [sampares]);
+          this.wordsplit.splice(index + 1, 0, result);
+          this.selectedType.splice(index + 1, 0, [true]);
+          this.typeindex.splice(index + 1, 0, 0);
+        }
+        else {
+          console.log("result is => ", result);
+          let sampares = '<prosody rate="50%"><prosody volume="x-loud">' + sampa(result) + '</prosody></prosody>';
+          this.typesArr.splice(index + 1, 0, [sampares]);
+          this.wordsplit.splice(index + 1, 0, result);
+          this.selectedType.splice(index + 1, 0, [true]);
+          this.typeindex.splice(index + 1, 0, 0);
+        }
       }
     });
   }
@@ -263,6 +274,13 @@ export class NewVoiceModal {
         this.typeindex.splice(index+1, 0, 0);
       }
     });
+  }
+
+  removeCard(index: number) {
+    this.typesArr.splice(index, 1);
+    this.wordsplit.splice(index, 1);
+    this.selectedType.splice(index, 1);
+    this.typeindex.splice(index, 1);
   }
 
   playAudioBuffer(buffer: any) {
@@ -377,10 +395,12 @@ export class SilentSound {
 @Component({
   selector: 'lettersound',
   templateUrl: './lettersound.html',
+  styleUrls: ['./new-voice-component.css']
 
 })
 export class LetterSound {
-  
+  selectedType: string = 'fyrir-skilgreint-sampa';
+  types: string[] = ['fyrir-skilgreint-sampa', 'texti'];
 }
 @Component({
   selector: 'save-voice-content',

@@ -1,19 +1,18 @@
 <application-nav-bar></application-nav-bar>
 <div style="margin: auto; padding: 10px; text-align: center;">
-  <h2>My Talking App</h2>
+  <h2>Veldu tegund og erfiðleikastig leiks</h2>
   <div style="margin-top: 10px">
-    <button style="font-size: 15px;" (click)="getData()">Log Data</button>
-    <label id="example-radio-group-label">Veldu tegund leiks</label>
+    <button mat-button  style="font-size: 15px; background: lavenderblush;" (click)="getData()">Sækja gögn</button>
     <mat-radio-group aria-labelledby="radio-group-label" class="typeofgame-radio-group" [(ngModel)]="chosentypeofgame">
       <mat-radio-button class="radio-button" *ngFor="let game of typeofgame" [value]="game">
-        {{game}}
+        {{game==="letters"?"Stafir":game==="words"?"Orð":"Setningar"}}
       </mat-radio-button>
     </mat-radio-group>
     <div class="difficulty" [ngStyle]="{'display': shouldDisplayDifficulty()}">
       <mat-radio-group display="none" aria-labelledby="radio-group-label" class="difficulty-radio-group"
         [(ngModel)]="chosendifficulty">
         <mat-radio-button class="radio-button" *ngFor="let difficulty of typeofdifficulty" [value]="difficulty">
-          {{difficulty}}
+          {{difficulty==="easy" ? "Auðvelt": "Miðlungs"}}
         </mat-radio-button>
       </mat-radio-group>
     </div>

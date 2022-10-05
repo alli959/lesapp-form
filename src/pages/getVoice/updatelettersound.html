@@ -1,6 +1,11 @@
-<div class="UpdateLettersound">
+<div class="UpdateLettersound" style = "display:flex; flex-direction: column; ">
   <h1>Bæta við hljóð stafa</h1>
+  <mat-radio-group style = "display: flex; padding-right: 10px; justify-content: space-evenly; margin-bottom: 10px;" aria-labelledby="radio-group-label" class="typeofgame-radio-group" [(ngModel)]="selectedType">
+    <mat-radio-button class="radio-button" *ngFor="let t of types" [value]="t">
+      {{t}}
+    </mat-radio-button>
+  </mat-radio-group>
   <textarea #userInput style="font-size: 15px; padding: 10px;" cols="60" rows="10"></textarea>
-  <button mat-button [mat-dialog-close]="userInput.value" style="font-size: 15px;" >Bæta við</button>
+  <button mat-button [mat-dialog-close]="userInput.value + '_'+ selectedType" style="font-size: 15px;" >Bæta við</button>
   <button mat-button mat-dialog-close style="font-size: 15px;" >Hætta</button>
 </div>

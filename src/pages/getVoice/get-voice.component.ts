@@ -1,21 +1,36 @@
 import {
-  Component, Inject
+  Component,
+  Inject
 } from '@angular/core';
 import {
   APIService
 } from '../../app/api.service'
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { DialogComponent } from 'src/components/dialog.component';
-import {SnackBarComponent} from 'src/components/snackbar.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer } from '@angular/platform-browser';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA
+} from '@angular/material/dialog';
+import {
+  DialogComponent
+} from 'src/components/dialog.component';
+import {
+  SnackBarComponent
+} from 'src/components/snackbar.component';
+import {
+  MatSnackBar
+} from '@angular/material/snack-bar';
+import {
+  MatIconRegistry
+} from '@angular/material/icon';
+import {
+  DomSanitizer
+} from '@angular/platform-browser';
 
 // import {MatRadioModule} from '@angular/material/radio';
 
 // Using Icelandic sampa dictionary, replace word with sampa
-export function sampa(word:string) {
-  const sampaDict:any = {
+export function sampa(word: string) {
+  const sampaDict: any = {
     "a": "a",
     "á": "au",
     "b": "b",
@@ -25,7 +40,7 @@ export function sampa(word:string) {
     "é": "e:",
     "f": "f",
     "g": "G",
-    "h": "h",
+    "h": "C",
     "i": "I",
     "í": "i:",
     "j": "j",
@@ -57,7 +72,7 @@ export function sampa(word:string) {
     "É": "e:",
     "F": "f",
     "G": "g",
-    "H": "h",
+    "H": "C",
     "I": "I",
     "Í": "i:",
     "J": "j",
@@ -96,10 +111,21 @@ export function sampa(word:string) {
 
 export interface DialogData {
   wordsplit: [];
+  text: "";
+  identity: "";
+  typeofgame: "";
+  typeofdifficulty: "";
+  karl: "";
+  dora: "";
 }
 export interface FinalDialogData {
   textkey: "";
   text: "";
+  identity: "";
+  eSelectedGame: "";
+  eSelectedDifficulty: "";
+  karl: "";
+  dora: "";
 }
 @Component({
   selector: 'app-root',
@@ -111,15 +137,15 @@ export class GetVoiceComponent {
   chosentypeofgame: string = ''
   typeofgame: string[] = ['letters', 'sentences', 'words'];
   chosendifficulty: string = '';
-  typeofdifficulty: string[] = ['easy', 'medium', 'hard'];
+  typeofdifficulty: string[] = ['easy', 'medium'];
   cardvalues: any[] = [];
 
   constructor(private api: APIService, public dialog: MatDialog, private _snackBar: MatSnackBar) {}
 
 
   openSnackBar(message: string) {
-    
-    this._snackBar.open(message,undefined,{
+
+    this._snackBar.open(message, undefined, {
       duration: 3000,
     });
   }
@@ -173,35 +199,102 @@ export class GetVoiceComponent {
     })
   }
 
-  deleteData(id: any,index: any) {
+  deleteData(id: any, index: any) {
     let dialog = this.dialog.open(DialogComponent, {
       width: '250px'
     });
-      dialog.afterClosed().subscribe(result => {
-        if(result === "yes") {          
-          console.log("id is =>", id);
-          this.api.delete({
-            id: id,
-            typeofgame: this.chosentypeofgame,
-            typeofdifficulty: this.chosendifficulty
-      
-          }).subscribe((result: any) => {
-            this.openSnackBar("Tókst að eyða");
-            this.cardvalues.splice(index,1);
-          });
-    }
+    dialog.afterClosed().subscribe(result => {
+      if (result === "yes") {
+        console.log("id is =>", id);
+        this.api.delete({
+          id: id,
+          typeofgame: this.chosentypeofgame,
+          typeofdifficulty: this.chosendifficulty
+
+        }).subscribe((result: any) => {
+          this.openSnackBar("Tókst að eyða");
+          this.cardvalues.splice(index, 1);
+        }, (error: any) => {
+          this.openSnackBar("Ekki tókst að eyða með skilaboðum => "+error.message);
+        });
       }
-    );
-    
+    });
 
 
-}
+
+  }
 
   updateData(id: any, index: any) {
     let textKey = this.cardvalues[index].TextKey;
-    console.log("textkey is =>",  textKey);
+    let text = this.cardvalues[index].Text;
+    let dora = this.cardvalues[index].Dora;
+    let karl = this.cardvalues[index].Karl;
+    let prewordsplit = textKey.split(" ");
+    let isInTag = false;
+    let tempInTagArr = [];
+    let wordsplit = [];
+    console.log("prewordsplit is =>", prewordsplit);
+    for (let i = 0; i < prewordsplit.length; i++) {
+      console.log('prewordsplit[i]', prewordsplit[i]);
+      if (isInTag) {
+        if (prewordsplit[i].includes("</prosody>")) {
+          tempInTagArr.push(prewordsplit[i]);
+          wordsplit.push(tempInTagArr.join(' '));
+          isInTag = false;
+          tempInTagArr = [];
+        } else if (prewordsplit[i].includes('</phoneme>')) {
+          tempInTagArr.push(prewordsplit[i]);
+          wordsplit.push(tempInTagArr.join(' '));
+          isInTag = false;
+          tempInTagArr = [];
+        } else if (prewordsplit[i].includes('/>')) {
+          tempInTagArr.push(prewordsplit[i]);
+          wordsplit.push(tempInTagArr.join(' '));
+          isInTag = false;
+          tempInTagArr = [];
+        } else {
+          tempInTagArr.push(prewordsplit[i]);
+        }
+
+      } else {
+
+        if (prewordsplit[i].includes("<prosody")) {
+          isInTag = true;
+          tempInTagArr.push(prewordsplit[i]);
+        } else if (prewordsplit[i].includes('<phoneme')) {
+          isInTag = true;
+          tempInTagArr.push(prewordsplit[i]);
+        } else if (prewordsplit[i].includes('<break')) {
+          isInTag = true;
+          tempInTagArr.push(prewordsplit[i]);
+        } else {
+          wordsplit.push(prewordsplit[i]);
+        }
+      }
+    }
+    wordsplit = wordsplit.filter(function (e) {
+      return e
+    });
+    console.log("wordsplit is =>", wordsplit);
+    console.log("textKey is =>", textKey);
+    console.log("text is =>", text);
+    const dialogRef = this.dialog.open(UpdateVoiceModal, {
+      data: {
+        wordsplit: wordsplit,
+        text: text,
+        identity: id,
+        typeofgame: this.chosentypeofgame,
+        typeofdifficulty: this.chosendifficulty,
+        dora: dora,
+        karl: karl
+
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
-  
+
 
 }
 
@@ -219,48 +312,120 @@ export class UpdateVoiceModal {
   wordsplit: string[] = [];
   selectedType: boolean[][] = [];
   text = "";
+  identity: string = "";
+  difficulty: string = "";
+  game: string = "";
+  dora: string = "";
+  karl: string = "";
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: DialogData, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private api: APIService, public dialog: MatDialog) {
     iconRegistry.addSvgIcon(
       'ear',
       sanitizer.bypassSecurityTrustResourceUrl('assets/ear.svg'));
     
+    this.dora = data.dora;
+    this.karl = data.karl;
     this.wordsplit = data.wordsplit;
-    this.text = data.wordsplit.join(' ');
+    this.text = data.text;
+    this.identity = data.identity;
+    let textArr = this.text.split(" ");
+    let index = 0;
+    this.difficulty = data.typeofdifficulty;
+    this.game = data.typeofgame;
 
     for (const element of this.wordsplit) {
 
-      if (element.includes('ll')) {
-        let wordWithoutT = `${element.substring(0, element.indexOf('ll'))}ll${element.substring(element.indexOf('ll')+2, element.length)}`;
-        let wordWithT = `${element.substring(0, element.indexOf('ll'))}tl${element.substring(element.indexOf('ll')+2, element.length)}`;
-        console.log("wordwitht is => ", wordWithT);
-        let newStringArr = [
-          element,
-          sampa(wordWithT),
-          sampa(wordWithoutT)
-          
-        ];
-        this.typesArr.push(newStringArr);
-        this.selectedType.push([true, false, false, false, false]);
-      } else {
-        this.typesArr.push([element]);
-        this.selectedType.push([true]);
-      }
-      this.typeindex.push(0);
+      if (element[0] === '<') {
 
+        if (element[1] + element[2] === 'ph') {
+          let word = element.substring(element.indexOf('>') + 1, element.indexOf('</'));
+          let wordWithT = `${word.substring(0, word.indexOf('ll'))}tl${word.substring(word.indexOf('ll')+2, word.length)}`;
+          let wordWithoutT = `${word.substring(0, word.indexOf('ll'))}ll${word.substring(word.indexOf('ll')+2, word.length)}`;
+          let newStringArr = [
+            word,
+            sampa(wordWithT),
+            sampa(wordWithoutT)
+
+          ];
+          this.typesArr.push(newStringArr);
+          if (element === newStringArr[0]) {
+            this.selectedType.push([true, false, false, false]);
+            this.typeindex.push(0);
+          } else if (element === newStringArr[1]) {
+            this.selectedType.push([false, true, false, false]);
+            this.typeindex.push(1);
+          } else if (element === newStringArr[2]) {
+            this.selectedType.push([false, false, true, false]);
+            this.typeindex.push(2);
+          } else {
+            this.selectedType.push([false, false, false, true]);
+            this.typeindex.push(3);
+          }
+          this.wordsplit[index] = word;
+
+
+        } else if (element[1] + element[2] === 'br') {
+          this.typesArr.push([element]);
+          this.selectedType.push([true]);
+          this.typeindex.push(0);
+        } else if (element[1] + element[2] === 'pr') {
+          // let temp = element.split('</phoneme></prosody></prosody>')[0].split('>');
+          // let sound = temp[temp.length-1];
+          this.wordsplit[index] = element;
+          this.typesArr.push([element]);
+          this.selectedType.push([true]);
+          this.typeindex.push(0);
+        }
+
+      } else {
+
+
+
+        if (element.includes('ll')) {
+          let wordWithoutT = `${element.substring(0, element.indexOf('ll'))}ll${element.substring(element.indexOf('ll')+2, element.length)}`;
+          let wordWithT = `${element.substring(0, element.indexOf('ll'))}tl${element.substring(element.indexOf('ll')+2, element.length)}`;
+          console.log("wordwitht is => ", wordWithT);
+          let newStringArr = [
+            element,
+            sampa(wordWithT),
+            sampa(wordWithoutT)
+
+          ];
+          this.typesArr.push(newStringArr);
+          this.selectedType.push([true, false, false, false, false]);
+          this.typeindex.push(0);
+        } else {
+          this.typesArr.push([element]);
+          this.selectedType.push([true]);
+          this.typeindex.push(0);
+        }
+
+      }
+      index++;
     }
   }
 
 
   addSound(index: number) {
     let dialogRef = this.dialog.open(UpdateLetterSound);
-    dialogRef.afterClosed().subscribe(result => {
-      if(result) {
-        let sampares = '<prosody rate="50%"><prosody volume="x-loud">' + sampa(result) + '</prosody></prosody>';
-        this.typesArr.splice(index+1, 0, [sampares]);
-        this.wordsplit.splice(index+1, 0, result);
-        this.selectedType.splice(index+1, 0, [true]);
-        this.typeindex.splice(index+1, 0, 0);
+    dialogRef.afterClosed().subscribe(result_type => {
+      if (result_type) {
+        let [result,type] = [result_type.split("_")[0],result_type.split("_")[1]];
+        if(type === "texti") {
+          let sampares = '<prosody volume="x-loud">' + result + '</prosody>';
+          this.typesArr.splice(index + 1, 0, [sampares]);
+          this.wordsplit.splice(index + 1, 0, result);
+          this.selectedType.splice(index + 1, 0, [true]);
+          this.typeindex.splice(index + 1, 0, 0);
+        }
+        else {
+          console.log("result is => ", result);
+          let sampares = '<prosody rate="50%"><prosody volume="x-loud">' + sampa(result) + '</prosody></prosody>';
+          this.typesArr.splice(index + 1, 0, [sampares]);
+          this.wordsplit.splice(index + 1, 0, result);
+          this.selectedType.splice(index + 1, 0, [true]);
+          this.typeindex.splice(index + 1, 0, 0);
+        }
       }
     });
   }
@@ -268,14 +433,21 @@ export class UpdateVoiceModal {
   addSilent(index: number) {
     let dialogRef = this.dialog.open(UpdateSilentSound);
     dialogRef.afterClosed().subscribe(result => {
-      if(result) {
+      if (result) {
         let resText = `<break time="${result}s"/>`
-        this.typesArr.splice(index+1, 0, [resText]);
-        this.wordsplit.splice(index+1, 0, resText);
-        this.selectedType.splice(index+1, 0, [true]);
-        this.typeindex.splice(index+1, 0, 0);
+        this.typesArr.splice(index + 1, 0, [resText]);
+        this.wordsplit.splice(index + 1, 0, resText);
+        this.selectedType.splice(index + 1, 0, [true]);
+        this.typeindex.splice(index + 1, 0, 0);
       }
     });
+  }
+
+  removeCard(index: number) {
+    this.typesArr.splice(index, 1);
+    this.wordsplit.splice(index, 1);
+    this.selectedType.splice(index, 1);
+    this.typeindex.splice(index, 1);
   }
 
   playAudioBuffer(buffer: any) {
@@ -287,9 +459,9 @@ export class UpdateVoiceModal {
       source.connect(context.destination);
       source.start(0);
     });
-    console.log("typesArr is",this.typesArr)
+    console.log("typesArr is", this.typesArr)
   }
-  listenKarl(input: string[],index: number) {
+  listenKarl(input: string[], index: number) {
 
 
     let data = {
@@ -311,14 +483,14 @@ export class UpdateVoiceModal {
     });
   }
 
-  changeToggle(wordIndex:number,newToggleIndex:number) {
+  changeToggle(wordIndex: number, newToggleIndex: number) {
     console.log("we are at the correct position");
-    console.log("wordIndex is",wordIndex);
-    console.log("newToggleIndex is",newToggleIndex);
+    console.log("wordIndex is", wordIndex);
+    console.log("newToggleIndex is", newToggleIndex);
     this.typeindex[wordIndex] = newToggleIndex;
   }
 
-  isToggle(wordIndex:number,newToggleIndex:number) {
+  isToggle(wordIndex: number, newToggleIndex: number) {
     if (this.typeindex[wordIndex] === newToggleIndex) {
       return true;
     }
@@ -362,15 +534,20 @@ export class UpdateVoiceModal {
       textkey = textkey + this.typesArr[i][this.typeindex[i]] + " ";
     }
     const dialogRef = this.dialog.open(UpdateSaveVoiceModal, {
-      
+
       data: {
         textkey: textkey,
-        text: this.text
+        text: this.text,
+        identity: this.identity,
+        eSelectedDifficulty: this.difficulty,
+        eSelectedGame: this.game,
+
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log("dialog closed");
+      console.log("result is =>", result);
+      this.dialog.closeAll();
     });
   }
 
@@ -383,15 +560,18 @@ export class UpdateVoiceModal {
 
 })
 export class UpdateSilentSound {
-  
+
 }
 @Component({
   selector: 'updatelettersound',
   templateUrl: './updatelettersound.html',
+  styleUrls: ['../newVoice/new-voice-component.css']
+
 
 })
 export class UpdateLetterSound {
-  
+  selectedType: string = 'fyrir-skilgreint-sampa';
+  types: string[] = ['fyrir-skilgreint-sampa', 'texti'];
 }
 @Component({
   selector: 'update-save-voice-content',
@@ -403,19 +583,15 @@ export class UpdateLetterSound {
 
 export class UpdateSaveVoiceModal {
 
-  voices = ["Karl", "Dora"];
-  selectedVoice = "Karl";
-  typeOfGame = ["Setningar", "Orð", "Stafir"];
-  selectedGame = "Setningar";
-  typeOfDifficulty = ["Auðvelt", "Miðlungs"];
-  selectedDifficulty = "Auðvelt";
-
+  dora: string = "";
+  karl: string = "";
   constructor(@Inject(MAT_DIALOG_DATA) public data: FinalDialogData, private api: APIService, private _snackBar: MatSnackBar, public dialog: MatDialog) {
-    
-    
+    this.dora = data.dora;
+    this.karl = data.karl;
+
   }
 
-  
+
 
 
   playAudio(url: any) {
@@ -426,39 +602,30 @@ export class UpdateSaveVoiceModal {
   }
 
   openSnackBar(message: string) {
-    
-    this._snackBar.open(message,undefined,{
+
+    this._snackBar.open(message, undefined, {
       duration: 3000,
     });
   }
 
   speakNow() {
-    let eSelectedGame;
-    let eSelectedDifficulty;
-    if (this.selectedGame === "Setningar") {
-      eSelectedGame = "sentences";
-    } else if (this.selectedGame === "Orð") {
-      eSelectedGame = "words";
-    } else if (this.selectedGame === "Stafir") {
-      eSelectedGame = "letters";
-    }
-    if (this.selectedDifficulty === "Auðvelt") {
-      eSelectedDifficulty = "easy";
-    } else if (this.selectedDifficulty === "Miðlungs") {
-      eSelectedDifficulty = "medium";
-    }
     let d = {
+      id: this.data.identity,
       text: this.data.text,
       textkey: this.data.textkey,
-      typeofgame: eSelectedGame,
-      typeofdifficulty: eSelectedDifficulty,
+      typeofgame: this.data.eSelectedGame,
+      typeofdifficulty: this.data.eSelectedDifficulty,
     }
-    this.api.speak(d).subscribe((result: any) => {
+    this.api.update(d).subscribe((result: any) => {
       console.log("result is =>", result);
-      this.openSnackBar("Tókst að vista hljóð");
-      this.dialog.closeAll();
-      
+      this.dora = result.doraUrl;
+      this.karl = result.karlUrl;
+      this.openSnackBar("Tókst að uppfæra hljóð");
+    },(error: any) => {
+      this.openSnackBar("Ekki tókst að vista hljóð");
     });
   }
+
   
+
 }
