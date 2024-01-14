@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">LesApp</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Voices
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="voice/get">Get</a>
+          <a class="dropdown-item" href="voice/create">Create</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLinkUser" role="button"
+          data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          User
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLinkUser">
+          <a class="dropdown-item" href="/user">{{email}}</a>
+          <a class="dropdown-item" href="#" (click)="onLogoutClick()">Logout</a>
+        </div>
+      </li>
+    </ul>
+    <button class="btn btn-danger my-2 my-sm-0" (click)="onLogoutClick()">Logout</button>
+
+  </div>
+</nav>

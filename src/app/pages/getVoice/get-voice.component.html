@@ -16,6 +16,9 @@
         </mat-radio-button>
       </mat-radio-group>
     </div>
+    <div *ngIf="isLoading" class="spinner-container">
+      <mat-spinner></mat-spinner>
+    </div>
     <div class="main-content" [ngStyle]="{'display': shouldDisplayMainContent()}">
       <div class="main-content-rows" style="display:block">
         <div class="main-content-rows-content">

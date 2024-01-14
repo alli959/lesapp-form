@@ -1,0 +1,43 @@
+/* Desktop View */
+@media (min-width: 992px) {
+  .navbar .nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+  }
+
+  .navbar .nav-item.dropdown .dropdown-menu {
+    display: none;
+  }
+
+  /* Ensure no gap between the toggle and the dropdown menu */
+  .navbar .nav-item.dropdown .dropdown-toggle+.dropdown-menu {
+    margin-top: 0;
+    top: 100%;
+    /* Adjust if necessary to ensure the dropdown menu is butting up against the toggle */
+  }
+}
+
+/* Styles for Navbar */
+.navbar {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.navbar-brand {
+  color: antiquewhite;
+}
+
+.nav-link {
+  color: antiquewhite;
+}
+
+.dropdown-menu a {
+  color: black;
+}
+
+.navbar-collapse {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+

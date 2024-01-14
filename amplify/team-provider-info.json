@@ -14,6 +14,12 @@
     "categories": {
       "auth": {
         "lesappforma257feeb": {}
+      },
+      "storage": {
+        "lesappform3bd03779": {
+          "bucketName": "lesapp-data",
+          "region": "eu-west-1"
+        }
       }
     }
   }
