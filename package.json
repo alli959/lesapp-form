@@ -25,6 +25,7 @@
     "@types/audiobuffer-to-wav": "^1.0.2",
     "angular-routing": "^0.3.1",
     "aws-amplify": "^4.3.14",
+    "aws-sdk": "^2.1540.0",
     "lamejs": "^1.2.1",
     "mdb-angular-ui-kit": "^1.6.1",
     "rxjs": "~7.5.0",

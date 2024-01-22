@@ -17,6 +17,10 @@ import { SvgIconComponent } from 'src/app/components/svg-icon.component';
 import { HomeComponent } from './pages/home/home.component';
 import { UserComponent } from './pages/user/user.component';
 import { AuthComponent } from './pages/auth/auth.component';
+import { UserSettingsComponent } from './components/user-settings/user-settings.component';
+import { MyScoreComponent } from './components/my-score/my-score.component';
+import { MyRecordingsComponent } from './components/my-recordings/my-recordings.component';
+import { StatisticsComponent } from './components/statistics/statistics.component';
 
 const routes: Routes = [
   {
@@ -29,7 +33,13 @@ const routes: Routes = [
     path: 'user',
     component: UserComponent,
     canActivate: [AuthGuard],
-    data: { requiresLogin: true },
+    data: { requiresLogin: true, requiresAdmin: true },
+    children: [
+      { path: 'settings', component: UserSettingsComponent },
+      { path: 'my-score', component: MyScoreComponent },
+      { path: 'my-recordings', component: MyRecordingsComponent },
+      { path: 'statistics', component: StatisticsComponent },
+    ],
   },
   {
     path: 'auth',

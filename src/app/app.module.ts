@@ -38,6 +38,10 @@ import { HomeComponent } from './pages/home/home.component';
 import { UserComponent } from './pages/user/user.component';
 import { AuthComponent } from './pages/auth/auth.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { UserSettingsComponent } from './components/user-settings/user-settings.component';
+import { MyScoreComponent } from './components/my-score/my-score.component';
+import { MyRecordingsComponent } from './components/my-recordings/my-recordings.component';
+import { StatisticsComponent } from './components/statistics/statistics.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +63,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     HomeComponent,
     UserComponent,
     AuthComponent,
+    UserSettingsComponent,
+    MyScoreComponent,
+    MyRecordingsComponent,
+    StatisticsComponent,
   ],
   imports: [
     FormsModule,
