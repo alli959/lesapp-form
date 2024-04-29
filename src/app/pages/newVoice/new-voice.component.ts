@@ -152,9 +152,7 @@ export class NewVoiceComponent {
       },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
+    dialogRef.afterClosed().subscribe((result) => {});
   }
   speakNow(input: string) {
     let data = {
@@ -206,7 +204,7 @@ export class NewVoiceModal {
           0,
           element.indexOf('ll')
         )}tl${element.substring(element.indexOf('ll') + 2, element.length)}`;
-        console.log('wordwitht is => ', wordWithT);
+
         let newStringArr = [element, sampa(wordWithT), sampa(wordWithoutT)];
         this.typesArr.push(newStringArr);
         this.selectedType.push([true, false, false, false, false]);
@@ -233,7 +231,6 @@ export class NewVoiceModal {
           this.selectedType.splice(index + 1, 0, [true]);
           this.typeindex.splice(index + 1, 0, 0);
         } else {
-          console.log('result is => ', result);
           let sampares =
             '<prosody rate="50%"><prosody volume="x-loud">' +
             sampa(result) +
@@ -276,7 +273,6 @@ export class NewVoiceModal {
       source.connect(context.destination);
       source.start(0);
     });
-    console.log('typesArr is', this.typesArr);
   }
   listenKarl(input: string[], index: number) {
     let data = {
@@ -298,9 +294,6 @@ export class NewVoiceModal {
   }
 
   changeToggle(wordIndex: number, newToggleIndex: number) {
-    console.log('we are at the correct position');
-    console.log('wordIndex is', wordIndex);
-    console.log('newToggleIndex is', newToggleIndex);
     this.typeindex[wordIndex] = newToggleIndex;
   }
 
@@ -346,7 +339,6 @@ export class NewVoiceModal {
     for (let i = 0; i < this.wordsplit.length; i++) {
       textkey = textkey + this.typesArr[i][this.typeindex[i]] + ' ';
     }
-    console.log('textkey is', textkey);
 
     const dialogRef = this.dialog.open(SaveVoiceModal, {
       data: {
@@ -355,9 +347,7 @@ export class NewVoiceModal {
       },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('dialog closed');
-    });
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 }
 
@@ -430,7 +420,6 @@ export class SaveVoiceModal {
       typeofdifficulty: eSelectedDifficulty,
     };
     this.api.speak(d).subscribe((result: any) => {
-      console.log('result is =>', result);
       this.openSnackBar('Tókst að vista hljóð');
       this.dialog.closeAll();
     });

@@ -19,7 +19,6 @@ export class APIService {
   constructor(private http: HttpClient) {}
 
   speak(data: any) {
-    console.log('data =', data);
     return this.http.post(this.ENDPOINT, data);
   }
 
@@ -29,7 +28,6 @@ export class APIService {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     };
-    console.log('token is =>', token);
 
     return this.http.get(this.GETENDPOINT, {
       params: {

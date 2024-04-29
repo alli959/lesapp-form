@@ -48,14 +48,13 @@ export class AuthService {
     try {
       const user = await this.getUser();
       this.user.next(user);
-      console.log('userid: ', user.attributes.sub);
+
       this.loggedIn.next(true);
       this.email.next(user.attributes.email);
       this.groups.next(
         user.signInUserSession.idToken.payload['cognito:groups']
       );
     } catch (error) {
-      console.log('error getting user', error);
       this.clearUserState();
     }
   }
@@ -86,13 +85,13 @@ export class AuthService {
           email,
         },
       });
-      console.log('signUpResponse: ', signUpResponse);
+
       let signInResponse = await Auth.signIn(username, password);
       this.updateUserState(signInResponse);
       return signInResponse;
     } catch (error) {
       this.clearUserState();
-      console.log('error signing up:', error);
+
       throw error;
     }
   }
@@ -103,19 +102,16 @@ export class AuthService {
       this.updateUserState(signInResponse);
       return signInResponse;
     } catch (error) {
-      console.log('error signing in', error);
       this.clearUserState();
       throw error;
     }
   }
 
   public async signOut(): Promise<void> {
-    console.log('signing out');
     try {
       await Auth.signOut();
       this.clearUserState();
     } catch (error) {
-      console.log('error signing out', error);
       this.clearUserState();
       throw error;
     }
@@ -135,10 +131,8 @@ export class AuthService {
       const groups = user.signInUserSession.idToken.payload['cognito:groups'];
 
       if (groups && groups.includes('admins')) {
-        console.log('User is in admin group');
         return true;
       } else {
-        console.log('User is not in admin group');
         return false;
       }
     } catch (error) {
@@ -159,7 +153,7 @@ export class AuthService {
 
   public async fetchAllCognitoUsers(): Promise<any> {
     let is_admin = await this.checkIfUserIsAdmin();
-    console.log('is_admin: ', is_admin);
+
     await this.initializeCognitoClient(); // Make sure client is initialized
     const allUsers = [];
     let paginationToken = null;

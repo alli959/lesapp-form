@@ -75,6 +75,6 @@ function wavToMp3(channels, sampleRate, samples) {
     let bUrl = window.URL.createObjectURL(mp3Blob);
 
     // send the download link to the console
-    console.log('mp3 download:', bUrl);
+
 
 }

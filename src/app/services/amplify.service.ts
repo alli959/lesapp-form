@@ -99,16 +99,6 @@ export class AmplifyService {
         return dateB - dateA; // Use `dateA - dateB` for ascending order
       }
     );
-    console.log('cognitoUsersNotInDataStore: ', cognitoUsersNotInDataStore);
-    console.log('dataStoreUsersNotInCognito: ', dataStoreUsersNotInCognito);
-    console.log(
-      'sortedCognitoUsersNotInDataStore',
-      sortedCognitoUsersNotInDataStore
-    );
-    console.log(
-      'sortedDataStoreUsersNotInCognito',
-      sortedDataStoreUsersNotInCognito
-    );
 
     // console.log emails of users not in cognito
   }

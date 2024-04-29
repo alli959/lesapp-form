@@ -33,7 +33,6 @@ export class AuthComponent {
       );
       this.router.navigate(['/']);
     } catch (error) {
-      console.log('error signing up:', error);
       throw error;
     }
   }
@@ -42,11 +41,8 @@ export class AuthComponent {
     let { username, password } = formData;
     try {
       let signInResponse = await this.authService.signIn(username, password);
-      console.log('signInResponse: ', signInResponse);
       this.router.navigate(['/']);
-    } catch (error) {
-      console.log('error signing in', error);
-    }
+    } catch (error) {}
   }
 
   services = {
