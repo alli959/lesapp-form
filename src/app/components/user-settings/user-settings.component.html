@@ -1,1 +1,11 @@
-<p>user-settings works!</p>
+<!-- user-settings.component.html -->
+<form [formGroup]="userDataForm" class = "user-data-form">
+  <!-- Form fields with labels, dropdowns, and edit buttons -->
+  <!-- ... -->
+  <button (click)="saveUserData()">Save</button>
+  <button (click)="resetForm()">Undo</button>
+
+    <!-- Add red button to delete account -->
+  <button (click)="deleteAccount()" class="delete-button">Delete Account</button>
+
+</form>

@@ -1,3 +1,5 @@
+// app/src/models/schema.js
+
 export const schema = {
     "models": {
         "UserScore": {

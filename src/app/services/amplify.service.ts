@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import Amplify, { Auth } from 'aws-amplify';
 import { DataStore } from '@aws-amplify/datastore';
+import generateClient from '@aws-amplify/api';
 import { schema } from '../../models/schema';
 import { AuthService } from './auth.service';
 
-import { UserData, UserScore } from '../../models';
+import { UserData, UserScore, Schools, PrefVoice } from '../../models';
 @Injectable({
   providedIn: 'root',
 })
@@ -16,7 +17,6 @@ export class AmplifyService {
   async getUserData() {
     try {
       const user = await Auth.currentAuthenticatedUser();
-      console.log('user is => ', user);
       const userId = user.attributes.sub; // or the appropriate identifier
       if (!userId) {
         throw new Error('User ID is undefined or null.');
@@ -24,7 +24,6 @@ export class AmplifyService {
       const userData = await this.lesaCollection.query(UserData, (where: any) =>
         where.id('eq', userId)
       );
-      console.log('userData is => ', userData);
       return userData;
     } catch (error) {
       console.error('Error fetching user data:', error);
@@ -35,7 +34,6 @@ export class AmplifyService {
   async getUserScore() {
     try {
       const user = await Auth.currentAuthenticatedUser();
-      console.log('user is => ', user);
       const userId = user.attributes.sub; // or the appropriate identifier
       if (!userId) {
         throw new Error('User ID is undefined or null.');
@@ -44,7 +42,6 @@ export class AmplifyService {
         UserScore,
         (where: any) => where.userdataID('eq', userId)
       );
-      console.log('userScores is => ', userScores);
       return userScores;
     } catch (error) {
       console.error('Error fetching user scores:', error);
@@ -56,14 +53,12 @@ export class AmplifyService {
     const user = await Auth.currentAuthenticatedUser();
     // order by username
     const userData = await this.lesaCollection.query(UserData);
-    console.log('All userData is => ', userData);
     return userData;
   }
 
   async getAllUserScore() {
     const user = await Auth.currentAuthenticatedUser();
     const userScores = await this.lesaCollection.query(UserScore);
-    console.log('All userScores is => ', userScores);
     return userScores;
   }
 
@@ -116,5 +111,61 @@ export class AmplifyService {
     );
 
     // console.log emails of users not in cognito
+  }
+
+  async createUserData(userDataDetails: {
+    school: Schools;
+    classname: string;
+    agreement: boolean;
+    readingStage: string;
+    prefVoice: PrefVoice;
+    saveRecord: boolean;
+    manualFix: boolean;
+    name: string;
+    age: string;
+  }): Promise<UserData> {
+    try {
+      const newUserData = await DataStore.save(
+        new UserData({
+          ...userDataDetails,
+        })
+      );
+      return newUserData;
+    } catch (error) {
+      console.error('Error creating new user data:', error);
+      throw error;
+    }
+  }
+
+  async updateUserData(
+    userDataId: string,
+    updateDetails: {
+      school?: Schools;
+      classname?: string;
+      agreement?: boolean;
+      readingStage?: string;
+      prefVoice?: PrefVoice;
+      saveRecord?: boolean;
+      manualFix?: boolean;
+      name?: string;
+      age?: string;
+    }
+  ): Promise<UserData> {
+    try {
+      const originalUserData = await DataStore.query(UserData, userDataId);
+      if (!originalUserData) {
+        throw new Error(`UserData not found with ID: ${userDataId}`);
+      }
+
+      const updatedUserData = await DataStore.save(
+        UserData.copyOf(originalUserData, (updated) => {
+          Object.assign(updated, updateDetails);
+        })
+      );
+      return updatedUserData;
+    } catch (error) {
+      console.error('Error updating user data:', error);
+      throw error;
+    }
   }
 }

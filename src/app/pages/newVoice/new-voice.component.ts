@@ -80,7 +80,6 @@ export function sampa(word: string) {
     let s = sampaDict[w];
     sampaWord += s;
   }
-  console.log('sampa word is =>', sampaWord);
   return `<phoneme alphabet="x-sampa" ph="${sampaWord}">${word}</phoneme>`;
 }
 

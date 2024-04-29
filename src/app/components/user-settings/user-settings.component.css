@@ -1,0 +1,17 @@
+.user-data-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-data-form button {
+  margin-top: 20px;
+  width: 30%;
+  border: none;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.user-data-form :last-child {
+  background: red;
+}
